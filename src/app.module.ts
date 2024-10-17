@@ -4,8 +4,9 @@ import { AppService } from './app.service';
 import { QuestionModule } from './question/question.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { Question } from './entity/question.entity';
+import { Question } from './question/entity/question.entity';
 import { HttpExceptionFilter } from './http-exception/http-exception.filter';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { HttpExceptionFilter } from './http-exception/http-exception.filter';
       entities: [Question],
     }),
     QuestionModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [
