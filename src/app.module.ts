@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { QuestionModule } from './question/question.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { Question } from './question/entity/question.entity';
 import { HttpExceptionFilter } from './http-exception/http-exception.filter';
 import { UserModule } from './user/user.module';
 
@@ -17,7 +16,8 @@ import { UserModule } from './user/user.module';
       username: 'root',
       password: '123456',
       database: 'nestdb',
-      entities: [Question],
+      entities: ['dist/**/*.entity{.ts,.js}'], // 使用通配符指定实体文件路径
+      synchronize: false, // 生产环境中建议关闭自动同步
     }),
     QuestionModule,
     UserModule,

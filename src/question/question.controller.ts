@@ -1,7 +1,15 @@
-import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { QuestionDto } from './dto/question.dto';
-import { Question } from './entity/question.entity';
+import { QuestionEntity } from './entity/question.entity';
 
 @Controller('question')
 export class QuestionController {
@@ -17,17 +25,19 @@ export class QuestionController {
     @Query('keyword') keyword: string,
     @Query('page') page: number,
     @Query('pageSize') pageSize: number,
-  ): Promise<{ records: Question[]; total: number }> {
+  ): Promise<{ records: QuestionEntity[]; total: number }> {
     return this.questionService.findAll({ keyword, page, pageSize });
   }
 
   @Get(':id')
-  findOne(@Param('id') _id: number): Promise<Question> {
+  findOne(@Param('id') _id: number): Promise<QuestionEntity> {
     return this.questionService.findOne(_id);
   }
 
   @Post()
-  async create(@Body() createQuestionDto: QuestionDto): Promise<Question> {
+  async create(
+    @Body() createQuestionDto: QuestionDto,
+  ): Promise<QuestionEntity> {
     return await this.questionService.create(createQuestionDto);
   }
 

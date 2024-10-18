@@ -7,17 +7,20 @@ import {
 } from 'typeorm';
 
 @Entity({
-  name: 'question',
+  name: 'user',
 })
-export class QuestionEntity {
+export class UserEntity {
   @PrimaryGeneratedColumn()
   _id: number;
 
-  @Column()
-  title: string;
+  @Column({ nullable: false, unique: true })
+  username: string;
 
-  @Column()
-  desc: string;
+  @Column({ nullable: false })
+  password: string;
+
+  @Column({ nullable: false })
+  nickname: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
