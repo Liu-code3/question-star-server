@@ -18,6 +18,7 @@ export class UserService {
   async findOne(username: string, password: string) {
     return await this.userRepository.findOne({
       where: { username, password },
+      select: ['username', '_id', 'nickname', 'createdAt', 'updatedAt'], // 只选择需要的字段
     });
   }
 }
