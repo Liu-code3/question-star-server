@@ -37,7 +37,7 @@ export class QuestionEntity {
   @Column({ nullable: true })
   author: string;
 
-  @Column()
+  @Column('json') //  可以使用 json 类型来存储复杂对象数组
   componentList: Array<{
     fe_id: string; // 组件 fe_id  需要前端控制, 前端生成的
     type: string;
