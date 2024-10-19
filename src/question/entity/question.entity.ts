@@ -19,6 +19,34 @@ export class QuestionEntity {
   @Column()
   desc: string;
 
+  @Column()
+  js: string;
+
+  @Column()
+  css: string;
+
+  @Column({ default: false })
+  isPublished: boolean;
+
+  @Column({ default: false })
+  isStar: boolean;
+
+  @Column({ default: false })
+  isDeleted: boolean;
+
+  @Column({ nullable: true })
+  author: string;
+
+  @Column()
+  componentList: Array<{
+    fe_id: string; // 组件 fe_id  需要前端控制, 前端生成的
+    type: string;
+    title: string;
+    isHidden: boolean;
+    isLocked: boolean;
+    props: object;
+  }>;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
