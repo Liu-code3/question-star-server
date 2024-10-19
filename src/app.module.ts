@@ -20,7 +20,7 @@ import { AuthGuard } from './auth/auth.guard';
       password: '123456',
       database: 'nestdb',
       entities: ['dist/**/*.entity{.ts,.js}'], // 使用通配符指定实体文件路径
-      synchronize: false, // 生产环境中建议关闭自动同步
+      synchronize: true, // 生产环境中建议关闭自动同步
     }),
     QuestionModule,
     UserModule,

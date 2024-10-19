@@ -5,7 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Request,
+  Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserDto } from '../user/dto/user.dto';
@@ -25,7 +25,7 @@ export class AuthController {
   }
 
   @Get('profile')
-  getProfile(@Request() req) {
+  getProfile(@Req() req) {
     return req.user;
   }
 }
