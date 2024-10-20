@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuestionEntity } from './entity/question.entity';
 import { In, Like, Repository } from 'typeorm';
@@ -32,24 +32,33 @@ export class QuestionService {
   }
 
   async updateOne(id: number, dto: QuestionDto, author: string) {
-    return await this.questionRepository.update({ _id: id, author }, dto);
+    // 使用 QueryBuilder 手动生成更新语句
+    const res = await this.questionRepository
+      .createQueryBuilder()
+      .update(QuestionEntity)
+      .set(dto)
+      .where('_id = :id AND author = :author', { id, author })
+      .execute();
+
+    if (res.affected === 0) {
+      throw new NotFoundException('问题未找到');
+    }
+    return res;
   }
 
   async findAll({
     keyword = '',
     page = 1,
     pageSize = 10,
-    isDeleted = false,
+    isDelete = false,
     isStar = false,
     author = '',
   }) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const _self = this;
     const [list, total] = await this.questionRepository.findAndCount({
       where: {
         title: Like(`%${keyword}%`),
-        isDeleted: _self.stringToBoolean(isDeleted),
-        isStar: _self.stringToBoolean(isStar),
+        isDelete: this.stringToBoolean(isDelete),
+        isStar: this.stringToBoolean(isStar),
         author,
       },
       order: {

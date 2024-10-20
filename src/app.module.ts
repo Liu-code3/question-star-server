@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
+import { CustomLogger } from './logs/custom-logger';
 
 @Module({
   imports: [
@@ -21,6 +22,8 @@ import { AuthGuard } from './auth/auth.guard';
       database: 'nestdb',
       entities: ['dist/**/*.entity{.ts,.js}'], // 使用通配符指定实体文件路径
       synchronize: true, // 生产环境中建议关闭自动同步
+      // logging: ['query', 'error'], // 开启查询和错误日志
+      logger: new CustomLogger(), // 自定义的 Logger。
     }),
     QuestionModule,
     UserModule,

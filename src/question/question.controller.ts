@@ -27,7 +27,7 @@ export class QuestionController {
     @Query('keyword') keyword: string,
     @Query('page') page: number,
     @Query('pageSize') pageSize: number,
-    @Query('isDeleted') isDeleted = false,
+    @Query('isDelete') isDelete = false,
     @Query('isStar') isStar: boolean,
     @Req() req,
   ): Promise<{ list: QuestionEntity[]; total: number }> {
@@ -36,7 +36,7 @@ export class QuestionController {
       keyword,
       page,
       pageSize,
-      isDeleted,
+      isDelete,
       isStar,
       author: username,
     });
@@ -60,13 +60,13 @@ export class QuestionController {
     @Body() updateQuestionDto: QuestionDto,
     @Req() req,
   ) {
-    const { username } = req;
-    const { affected } = await this.questionService.updateOne(
+    const { username } = req.user;
+
+    return await this.questionService.updateOne(
       id,
       updateQuestionDto,
       username,
     );
-    return affected > 0 ? '更新成功' : '更新失败';
   }
 
   @Delete(':id')

@@ -25,14 +25,14 @@ export class QuestionEntity {
   @Column()
   css: string;
 
-  @Column({ default: false })
+  @Column({ type: 'tinyint', width: 1 })
   isPublished: boolean;
 
-  @Column({ default: false })
+  @Column({ type: 'tinyint', width: 1 })
   isStar: boolean;
 
-  @Column({ default: false })
-  isDeleted: boolean;
+  @Column({ type: 'tinyint', width: 1 })
+  isDelete: boolean;
 
   @Column({ nullable: true })
   author: string;
