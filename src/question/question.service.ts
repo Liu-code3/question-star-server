@@ -1,9 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuestionEntity } from './entity/question.entity';
-import { In, Like, Repository } from 'typeorm';
+import { FindOperator, In, Like, Repository } from 'typeorm';
 import { QuestionDto } from './dto/question.dto';
 import { nanoid } from 'nanoid';
+
+type QueryAllType = {
+  title: FindOperator<string>;
+  isDelete?: boolean;
+  isStar?: boolean;
+  author: string;
+};
 
 @Injectable()
 export class QuestionService {
@@ -51,16 +58,21 @@ export class QuestionService {
     page = 1,
     pageSize = 10,
     isDelete = false,
-    isStar = false,
+    isStar,
     author = '',
   }) {
+    const where: QueryAllType = {
+      title: Like(`%${keyword}%`),
+      isDelete: this.stringToBoolean(isDelete),
+      author,
+    };
+
+    if (isStar) {
+      where.isStar = this.stringToBoolean(isStar);
+    }
+
     const [list, total] = await this.questionRepository.findAndCount({
-      where: {
-        title: Like(`%${keyword}%`),
-        isDelete: this.stringToBoolean(isDelete),
-        isStar: this.stringToBoolean(isStar),
-        author,
-      },
+      where,
       order: {
         _id: 'DESC',
       },
@@ -109,6 +121,6 @@ export class QuestionService {
     }
 
     // 如果传入的类型既不是 boolean 也不是 string，则抛出错误
-    throw new TypeError('Input must be a string or boolean');
+    throw new TypeError(`${str} must be a string  or boolean`);
   }
 }
