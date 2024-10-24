@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import { CustomLogger } from './logs/custom-logger';
+import { AnswerModule } from './answer/answer.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { CustomLogger } from './logs/custom-logger';
     QuestionModule,
     UserModule,
     AuthModule,
+    AnswerModule,
   ],
   controllers: [AppController],
   providers: [

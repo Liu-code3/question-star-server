@@ -48,7 +48,7 @@ export class QuestionService {
       .execute();
 
     if (res.affected === 0) {
-      throw new NotFoundException('问题未找到');
+      throw new NotFoundException('问卷未找到');
     }
     return res;
   }
