@@ -11,6 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import { CustomLogger } from './logs/custom-logger';
 import { AnswerModule } from './answer/answer.module';
+import { StatModule } from './stat/stat.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AnswerModule } from './answer/answer.module';
     UserModule,
     AuthModule,
     AnswerModule,
+    StatModule,
   ],
   controllers: [AppController],
   providers: [

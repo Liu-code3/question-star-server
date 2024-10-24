@@ -18,4 +18,22 @@ export class AnswerService {
 
     return this.answerRepository.save(answerData);
   }
+
+  async count(questionId: number) {
+    if (!questionId) return 0;
+
+    return await this.answerRepository.countBy({
+      questionId: String(questionId),
+    });
+  }
+
+  async findAll(questionId: number, opt: { page: number; pageSize: number }) {
+    if (!questionId) return [];
+
+    return await this.answerRepository.find({
+      where: { questionId: String(questionId) },
+      skip: (opt.page - 1) * opt.pageSize,
+      take: opt.pageSize,
+    });
+  }
 }
